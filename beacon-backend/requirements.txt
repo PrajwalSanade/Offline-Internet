@@ -6,3 +6,5 @@ pydantic-settings==2.1.0
 python-multipart==0.0.6
 pycryptodome==3.19.0
 python-dotenv==1.0.0
+httpx==0.23.3
+pytest>=7.0.0
