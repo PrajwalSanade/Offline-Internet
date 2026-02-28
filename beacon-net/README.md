@@ -94,9 +94,12 @@ npm run dev
 Frontend runs at:
 
 http://localhost:5173
+
+
 🧪 Run Backend Tests
 cd beacon-backend
 pytest test_main.py -v
+
 🔐 Security Features
 
 AES-256-CBC message encryption
