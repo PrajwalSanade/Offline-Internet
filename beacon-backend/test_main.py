@@ -35,6 +35,16 @@ app.dependency_overrides[get_db] = override_get_db
 client = TestClient(app)
 
 
+@pytest.fixture(autouse=True)
+def reset_db():
+    """Reset the test database before each test for isolation."""
+    # Drop and recreate all tables to ensure a clean state
+    Base.metadata.drop_all(bind=engine)
+    Base.metadata.create_all(bind=engine)
+    yield
+    Base.metadata.drop_all(bind=engine)
+
+
 class TestDeviceManagement:
     """Test device registration and retrieval."""
 

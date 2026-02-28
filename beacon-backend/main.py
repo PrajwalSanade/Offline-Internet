@@ -36,10 +36,15 @@ app = FastAPI(
     version="1.0.0",
 )
 
+# In production, set ALLOWED_ORIGINS to your deployed frontend domain(s), comma-separated.
 # Add CORS middleware
+import os
+
+ALLOWED_ORIGINS = os.getenv("ALLOWED_ORIGINS", "http://localhost:5173").split(",")
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Restrict this in production
+    allow_origins=ALLOWED_ORIGINS,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -61,20 +66,17 @@ def generate_id() -> str:
     return str(uuid.uuid4())
 
 
-def calculate_message_hash(source_id: str, destination_id: str, content: str, timestamp: str) -> str:
+def calculate_message_hash(source_id: str, destination_id: str, content: str) -> str:
     """
     Calculate SHA-256 hash of message for duplicate detection.
-    
-    Args:
-        source_id: Source device ID
-        destination_id: Destination device ID
-        content: Message content
-        timestamp: Message timestamp
-        
-    Returns:
-        SHA-256 hash as hex string
+
+    The hash is computed from source_id, destination_id and content only.
+    Timestamp is intentionally excluded so that identical messages sent
+    at different times will be detected as duplicates.
+
+    Returns the SHA-256 hex digest.
     """
-    message_data = f"{source_id}:{destination_id}:{content}:{timestamp}"
+    message_data = f"{source_id}:{destination_id}:{content}"
     return hashlib.sha256(message_data.encode()).hexdigest()
 
 
@@ -118,6 +120,7 @@ def register_device(
         location=request.location,
         device_type=request.device_type,
         status="online",
+        created_at=datetime.now(),
     )
     
     db.add(device)
@@ -147,7 +150,8 @@ def get_nodes(
     if status:
         query = query.filter(Device.status == status)
     
-    devices = query.all()
+    # Order by creation time so most recently registered devices appear first
+    devices = query.order_by(desc(Device.created_at)).all()
     return devices
 
 
@@ -193,13 +197,11 @@ def send_message(
     if request.is_encrypted:
         content = encryption_manager.encrypt(request.content)
     
-    # Generate message hash for duplicate detection
-    timestamp_str = datetime.now().isoformat()
+    # Generate message hash for duplicate detection (excludes timestamp)
     message_hash = calculate_message_hash(
         request.source_id,
         request.destination_id or "broadcast",
         request.content,
-        timestamp_str
     )
     
     # Check for duplicates
@@ -261,13 +263,11 @@ def broadcast_message(
     if request.is_encrypted:
         content = encryption_manager.encrypt(request.content)
     
-    # Generate message hash for duplicate detection
-    timestamp_str = datetime.now().isoformat()
+    # Generate message hash for duplicate detection (excludes timestamp)
     message_hash = calculate_message_hash(
         request.source_id,
         "broadcast",
         request.content,
-        timestamp_str
     )
     
     # Check for duplicates

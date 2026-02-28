@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { Send, Radio, ArrowLeft } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { api, type Node, type Message } from "@/lib/api";
+import { registerDevice, getStoredDeviceId } from "@/services/deviceService";
 
 export default function Messaging() {
   const [nodes, setNodes] = useState<Node[]>([]);
@@ -13,6 +14,19 @@ export default function Messaging() {
 
   useEffect(() => {
     api.getNodes().then(setNodes);
+
+    // ensure a device is registered for this client on load
+    (async () => {
+      try {
+        const stored = getStoredDeviceId();
+        if (!stored) {
+          const name = typeof navigator !== "undefined" ? `${navigator.platform || "Web"} Client` : "WebClient";
+          await registerDevice({ name });
+        }
+      } catch (err) {
+        // ignore registration errors (handled globally by axios)
+      }
+    })();
   }, []);
 
   useEffect(() => {

@@ -23,6 +23,7 @@ Offline Internet is a mesh-enabled communication system that allows:
 
 Frontend (React + Vite + TypeScript)  
 ⬇  
+
 Backend (FastAPI + SQLite)  
 ⬇  
 Local Database (Offline-first design)
