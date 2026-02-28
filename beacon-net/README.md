@@ -1,73 +1,180 @@
-# Welcome to your Lovable project
+# 🌐 Offline Internet – Emergency Communication System
 
-## Project info
+A decentralized emergency communication platform that works without traditional internet infrastructure.
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+Built for disaster resilience, campus outages, and mesh-based peer communication.
 
-## How can I edit this code?
+---
 
-There are several ways of editing your application.
+## 🚀 Project Overview
 
-**Use Lovable**
+Offline Internet is a mesh-enabled communication system that allows:
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
+- 📡 Device-to-device messaging  
+- 📢 Emergency broadcast alerts  
+- 🛒 Offline relief marketplace  
+- 🔐 AES-256 encrypted messages  
+- 🔁 Duplicate message detection  
+- 📊 Hop-based routing logic  
 
-Changes made via Lovable will be committed automatically to this repo.
+---
 
-**Use your preferred IDE**
+## 🏗️ Architecture
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+Frontend (React + Vite + TypeScript)  
+⬇  
+Backend (FastAPI + SQLite)  
+⬇  
+Local Database (Offline-first design)
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+---
 
-Follow these steps:
+## 🛠️ Tech Stack
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
-```
-
-**Edit a file directly in GitHub**
-
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
-
-**Use GitHub Codespaces**
-
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
-
-## What technologies are used for this project?
-
-This project is built with:
-
-- Vite
-- TypeScript
+### Frontend
 - React
-- shadcn-ui
+- TypeScript
+- Vite
 - Tailwind CSS
+- shadcn-ui
 
-## How can I deploy this project?
+### Backend
+- FastAPI
+- SQLAlchemy
+- SQLite
+- Pydantic
+- AES-256 Encryption
+- Pytest
 
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
+---
 
-## Can I connect a custom domain to my Lovable project?
+# ⚙️ Local Setup Guide
 
-Yes, you can!
+---
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+## 1️⃣ Clone the Repository
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+```bash
+git clone https://github.com/PrajwalSanade/Offline-Internet.git
+cd Offline-Internet
+
+🔵 Backend Setup
+cd beacon-backend
+python -m venv venv
+Activate Virtual Environment
+
+Windows
+
+.\venv\Scripts\activate
+
+Mac/Linux
+
+source venv/bin/activate
+Install Dependencies
+pip install -r requirements.txt
+Run Backend Server
+uvicorn main:app --reload
+
+Backend runs at:
+
+http://localhost:8000
+
+Swagger API Docs:
+
+http://localhost:8000/docs
+🟢 Frontend Setup
+
+Open a new terminal:
+
+cd beacon-net
+npm install
+npm run dev
+
+Frontend runs at:
+
+http://localhost:5173
+🧪 Run Backend Tests
+cd beacon-backend
+pytest test_main.py -v
+🔐 Security Features
+
+AES-256-CBC message encryption
+
+SHA-256 duplicate detection
+
+SQLite offline database
+
+CORS middleware enabled
+
+Pydantic schema validation
+
+📡 API Endpoints
+Device
+
+POST /register-device
+
+GET /nodes
+
+Messaging
+
+POST /send-message
+
+POST /broadcast
+
+GET /messages/{device_id}
+
+Marketplace
+
+GET /marketplace
+
+POST /marketplace
+
+PUT /marketplace/{id}/resolve
+
+Utility
+
+GET /health
+
+GET /
+
+📦 Folder Structure
+Offline-Internet/
+│
+├── beacon-backend/
+│   ├── main.py
+│   ├── models.py
+│   ├── database.py
+│   ├── schemas.py
+│   ├── encryption.py
+│   └── test_main.py
+│
+├── beacon-net/
+│   ├── src/
+│   ├── package.json
+│   └── vite.config.ts
+│
+└── README.md
+🎯 Key Features
+
+✅ Offline-first architecture
+✅ Emergency broadcast mode
+✅ Resource marketplace
+✅ Message hop routing
+✅ Secure encryption
+✅ Full test coverage
+
+🏆 Hackathon Value
+
+Real-world disaster resilience use case
+Strong backend architecture
+Secure encrypted messaging
+Clean modern frontend
+Production-ready API design
+
+👨‍💻 Author
+Prajwal Sanade
+GitHub: https://github.com/PrajwalSanade
+
+📜 License
+
+MIT License
