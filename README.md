@@ -151,8 +151,9 @@ Utility
     GET /health
 
 
-📦 Project Structure
+## 📦 Project Structure
 
+```
 Offline-Internet/
 │
 ├── beacon-backend/
@@ -168,7 +169,9 @@ Offline-Internet/
 │   ├── package.json
 │   └── vite.config.ts
 │
-└── docker-compose.yml
+├── docker-compose.yml
+└── README.md
+```
 
 
 🎯 Key Highlights
