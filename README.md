@@ -130,25 +130,43 @@ To stop:
 
 
 
-📡 API Endpoints
+## 📡 API Endpoints
 
-Device
-    POST /register-device
-    GET /nodes
+### 🖥 Device Management
 
-Messaging
-    POST /send-message
-    POST /broadcast
-    GET /messages/{device_id}
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| POST | `/register-device` | Register a new device |
+| GET  | `/nodes` | Get all active devices |
 
-Marketplace
-    GET /marketplace
-    POST /marketplace
-    PUT /marketplace/{id}/resolve
+---
 
-Utility
-    GET /
-    GET /health
+### 💬 Messaging
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| POST | `/send-message` | Send a direct message |
+| POST | `/broadcast` | Broadcast message to all nodes |
+| GET  | `/messages/{device_id}` | Get messages for a device |
+
+---
+
+### 🛒 Marketplace
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET  | `/marketplace` | Get all listings |
+| POST | `/marketplace` | Create a listing |
+| PUT  | `/marketplace/{id}/resolve` | Resolve a listing |
+
+---
+
+### 🩺 Utility
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/health` | Health check |
+| GET | `/` | API root info |
 
 
 ## 📦 Project Structure
