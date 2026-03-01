@@ -1,147 +1,158 @@
-# 🌐 Offline Internet – Emergency Communication System
+🌐 Offline Internet – Emergency Communication System
 
-A decentralized emergency communication platform that works without traditional internet infrastructure.
+    A decentralized, mesh-enabled emergency communication platform that works without traditional internet infrastructure.
 
-Built for disaster resilience, campus outages, and mesh-based peer communication.
+    Built for disaster resilience, campus-wide outages, and peer-to-peer mesh communication.
 
----
+🚀 Project Overview
 
-## 🚀 Project Overview
+    Offline Internet enables device-to-device communication when standard networks fail.
 
-Offline Internet is a mesh-enabled communication system that allows:
+Core Capabilities
 
-- 📡 Device-to-device messaging  
-- 📢 Emergency broadcast alerts  
-- 🛒 Offline relief marketplace  
-- 🔐 AES-256 encrypted messages  
-- 🔁 Duplicate message detection  
-- 📊 Hop-based routing logic  
+    📡 Peer-to-peer device messaging
+    📢 Emergency broadcast alerts
+    🛒 Offline relief & resource marketplace
+    🔐 AES-256 encrypted messages
+    🔁 SHA-256 duplicate message detection
+    📊 Hop-based routing logic
+    🗄️ Offline-first SQLite database
 
----
+🏗️ System Architecture
 
-## 🏗️ Architecture
+    Frontend (React + Vite + TypeScript)
+            ↓
+    Backend (FastAPI + SQLAlchemy)
+            ↓
+    SQLite Database (Offline-first)
 
-Frontend (React + Vite + TypeScript)  
-⬇  
+    Designed for local-first deployment, optionally containerized using Docker.
 
-Backend (FastAPI + SQLite)  
-⬇  
-Local Database (Offline-first design)
 
----
+🛠️ Tech Stack
 
-## 🛠️ Tech Stack
+🎨 Frontend
 
-### Frontend
-- React
-- TypeScript
-- Vite
-- Tailwind CSS
-- shadcn-ui
+    React
+    TypeScript
+    Vite
+    Tailwind CSS
+    shadcn-ui
 
-### Backend
-- FastAPI
-- SQLAlchemy
-- SQLite
-- Pydantic
-- AES-256 Encryption
-- Pytest
+⚙️ Backend
 
----
+    FastAPI
+    SQLAlchemy 2.x
+    SQLite
+    Pydantic v2
+    AES-256 Encryption (PyCryptodome)
+    Pytest (Test Coverage)
 
-# ⚙️ Local Setup Guide
+⚙️ Local Setup Guide
 
----
+    Default backend URL: http://localhost:8000
+    Frontend reads backend URL from VITE_API_BASE_URL
 
-## 1️⃣ Clone the Repository
 
-```bash
-git clone https://github.com/PrajwalSanade/Offline-Internet.git
-cd Offline-Internet
+1️⃣ Clone the Repository
+
+    git clone https://github.com/PrajwalSanade/Offline-Internet.git
+    cd Offline-Internet
 
 🔵 Backend Setup
-cd beacon-backend
-python -m venv venv
-Activate Virtual Environment
 
-Windows
+    Step 1 – Navigate to backend
+    cd beacon-backend
 
-.\venv\Scripts\activate
+    Step 2 – Create Virtual Environment
+    python -m venv venv
 
-Mac/Linux
+    Step 3 – Activate Environment
 
-source venv/bin/activate
-Install Dependencies
-pip install -r requirements.txt
-Run Backend Server
-uvicorn main:app --reload
+    Windows
+    .\venv\Scripts\activate
 
-Backend runs at:
+    Mac/Linux
+    source venv/bin/activate
 
-http://localhost:8000
+    Step 4 – Install Dependencies
+    pip install -r requirements.txt
 
-Swagger API Docs:
+    Step 5 – Run Backend Server
+    uvicorn main:app --reload
 
+    Backend runs at:
+    http://localhost:8000
+
+📄 Swagger API Docs
 http://localhost:8000/docs
-🟢 Frontend Setup
 
+🟢 Frontend Setup
 Open a new terminal:
 
-cd beacon-net
-npm install
-npm run dev
+    cd beacon-net
+    npm install
+    npm run dev
 
-Frontend runs at:
+    Frontend runs at:
+    http://localhost:5173
 
-http://localhost:5173
+
+🐳 Docker (Recommended Quick Start)
+
+    From the project root:
+    docker compose up --build
+
+Services:
+
+    Backend → http://localhost:8000
+    Frontend → http://localhost:5173
+
+To stop:
+    docker compose down
 
 
-🧪 Run Backend Tests
-cd beacon-backend
-pytest test_main.py -v
+🧪 Run Tests
+    Backend Tests
+
+    cd beacon-backend
+    pytest test_main.py -v
+
 
 🔐 Security Features
 
-AES-256-CBC message encryption
+    AES-256-CBC encryption
+    SHA-256 message hashing
+    Duplicate message detection
+    Offline SQLite database
+    CORS protection
+    Pydantic schema validation
 
-SHA-256 duplicate detection
 
-SQLite offline database
-
-CORS middleware enabled
-
-Pydantic schema validation
 
 📡 API Endpoints
+
 Device
-
-POST /register-device
-
-GET /nodes
+    POST /register-device
+    GET /nodes
 
 Messaging
-
-POST /send-message
-
-POST /broadcast
-
-GET /messages/{device_id}
+    POST /send-message
+    POST /broadcast
+    GET /messages/{device_id}
 
 Marketplace
-
-GET /marketplace
-
-POST /marketplace
-
-PUT /marketplace/{id}/resolve
+    GET /marketplace
+    POST /marketplace
+    PUT /marketplace/{id}/resolve
 
 Utility
+    GET /
+    GET /health
 
-GET /health
 
-GET /
+📦 Project Structure
 
-📦 Folder Structure
 Offline-Internet/
 │
 ├── beacon-backend/
@@ -157,27 +168,34 @@ Offline-Internet/
 │   ├── package.json
 │   └── vite.config.ts
 │
-└── README.md
-🎯 Key Features
+└── docker-compose.yml
 
-✅ Offline-first architecture
-✅ Emergency broadcast mode
-✅ Resource marketplace
-✅ Message hop routing
-✅ Secure encryption
-✅ Full test coverage
+
+🎯 Key Highlights
+
+    ✅ Offline-first architecture
+    ✅ Emergency broadcast mode
+    ✅ Secure encrypted messaging
+    ✅ Mesh-based communication logic
+    ✅ Resource marketplace
+    ✅ Clean modern UI
+    ✅ Production-ready API structure
+
 
 🏆 Hackathon Value
 
-Real-world disaster resilience use case
-Strong backend architecture
-Secure encrypted messaging
-Clean modern frontend
-Production-ready API design
+    Real-world disaster resilience use case
+    Strong backend engineering
+    Secure encryption implementation
+    Full-stack architecture
+    Docker-ready deployment
+
 
 👨‍💻 Author
-Prajwal Sanade
-GitHub: https://github.com/PrajwalSanade
+
+    Prajwal Sanade
+    GitHub: https://github.com/PrajwalSanade
+
 
 📜 License
 

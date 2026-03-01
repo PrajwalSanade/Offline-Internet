@@ -2,7 +2,9 @@
 
 This guide provides curl commands to test all endpoints of the Beacon Network API.
 
-**Base URL**: `http://localhost:8000`
+**Base URL**: Use your backend base URL. Set via environment (for example `BACKEND_URL` or `SERVER_HOST`/`SERVER_PORT`). Default: `${BACKEND_URL:-http://localhost:8000}`
+
+Replace `${BACKEND_URL:-http://localhost:8000}` in examples with your environment value when needed.
 
 ## Prerequisites
 
@@ -14,7 +16,7 @@ This guide provides curl commands to test all endpoints of the Beacon Network AP
 
 ### 1. Health Check
 ```bash
-curl -X GET "http://localhost:8000/health"
+curl -X GET "${BACKEND_URL:-http://localhost:8000}/health"
 ```
 
 **Expected Response**:
@@ -28,7 +30,7 @@ curl -X GET "http://localhost:8000/health"
 
 ### 2. API Information
 ```bash
-curl -X GET "http://localhost:8000/"
+curl -X GET "${BACKEND_URL:-http://localhost:8000}/"
 ```
 
 **Expected Response**:
@@ -46,7 +48,7 @@ curl -X GET "http://localhost:8000/"
 
 ### 3. Register Device
 ```bash
-curl -X POST "http://localhost:8000/register-device" \
+curl -X POST "${BACKEND_URL:-http://localhost:8000}/register-device" \
   -H "Content-Type: application/json" \
   -d '{
     "name": "Emergency Router 1",
@@ -64,7 +66,7 @@ For testing, register these devices:
 
 **Device 2 - Sensor Node**:
 ```bash
-curl -X POST "http://localhost:8000/register-device" \
+curl -X POST "${BACKEND_URL:-http://localhost:8000}/register-device" \
   -H "Content-Type: application/json" \
   -d '{
     "name": "Temperature Sensor",
@@ -75,7 +77,7 @@ curl -X POST "http://localhost:8000/register-device" \
 
 **Device 3 - Gateway**:
 ```bash
-curl -X POST "http://localhost:8000/register-device" \
+curl -X POST "${BACKEND_URL:-http://localhost:8000}/register-device" \
   -H "Content-Type: application/json" \
   -d '{
     "name": "Network Gateway",
@@ -86,12 +88,12 @@ curl -X POST "http://localhost:8000/register-device" \
 
 ### 5. Get All Devices/Nodes
 ```bash
-curl -X GET "http://localhost:8000/nodes"
+curl -X GET "${BACKEND_URL:-http://localhost:8000}/nodes"
 ```
 
 **With optional status filter**:
 ```bash
-curl -X GET "http://localhost:8000/nodes?status=online"
+curl -X GET "${BACKEND_URL:-http://localhost:8000}/nodes?status=online"
 ```
 
 **Expected Response**:
@@ -119,7 +121,7 @@ First, get two device IDs from the `/nodes` endpoint.
 Replace `SOURCE_ID` and `DEST_ID` with actual device UUIDs:
 
 ```bash
-curl -X POST "http://localhost:8000/send-message" \
+curl -X POST "${BACKEND_URL:-http://localhost:8000}/send-message" \
   -H "Content-Type: application/json" \
   -d '{
     "source_id": "SOURCE_ID",
@@ -132,7 +134,7 @@ curl -X POST "http://localhost:8000/send-message" \
 
 **With encryption**:
 ```bash
-curl -X POST "http://localhost:8000/send-message" \
+curl -X POST "${BACKEND_URL:-http://localhost:8000}/send-message" \
   -H "Content-Type: application/json" \
   -d '{
     "source_id": "SOURCE_ID",
@@ -163,7 +165,7 @@ curl -X POST "http://localhost:8000/send-message" \
 ### 7. Broadcast Message
 
 ```bash
-curl -X POST "http://localhost:8000/broadcast" \
+curl -X POST "${BACKEND_URL:-http://localhost:8000}/broadcast" \
   -H "Content-Type: application/json" \
   -d '{
     "source_id": "SOURCE_ID",
@@ -180,12 +182,12 @@ curl -X POST "http://localhost:8000/broadcast" \
 Replace `DEVICE_ID` with actual UUID:
 
 ```bash
-curl -X GET "http://localhost:8000/messages/DEVICE_ID"
+curl -X GET "${BACKEND_URL:-http://localhost:8000}/messages/DEVICE_ID"
 ```
 
 **With pagination**:
 ```bash
-curl -X GET "http://localhost:8000/messages/DEVICE_ID?limit=20&offset=0"
+curl -X GET "${BACKEND_URL:-http://localhost:8000}/messages/DEVICE_ID?limit=20&offset=0"
 ```
 
 **Expected Response**:
@@ -213,7 +215,7 @@ Send the exact same message twice:
 
 ```bash
 # First message
-curl -X POST "http://localhost:8000/broadcast" \
+curl -X POST "${BACKEND_URL:-http://localhost:8000}/broadcast" \
   -H "Content-Type: application/json" \
   -d '{
     "source_id": "DEVICE_ID",
@@ -223,7 +225,7 @@ curl -X POST "http://localhost:8000/broadcast" \
   }'
 
 # Second message (identical)
-curl -X POST "http://localhost:8000/broadcast" \
+curl -X POST "${BACKEND_URL:-http://localhost:8000}/broadcast" \
   -H "Content-Type: application/json" \
   -d '{
     "source_id": "DEVICE_ID",
@@ -249,7 +251,7 @@ Status: `409 Conflict`
 Replace `DEVICE_ID` with actual UUID:
 
 ```bash
-curl -X POST "http://localhost:8000/marketplace" \
+curl -X POST "${BACKEND_URL:-http://localhost:8000}/marketplace" \
   -H "Content-Type: application/json" \
   -d '{
     "device_id": "DEVICE_ID",
@@ -288,7 +290,7 @@ curl -X POST "http://localhost:8000/marketplace" \
 
 **Bandwidth Listing**:
 ```bash
-curl -X POST "http://localhost:8000/marketplace" \
+curl -X POST "${BACKEND_URL:-http://localhost:8000}/marketplace" \
   -H "Content-Type: application/json" \
   -d '{
     "device_id": "DEVICE_ID",
@@ -303,7 +305,7 @@ curl -X POST "http://localhost:8000/marketplace" \
 
 **Computing Power Listing**:
 ```bash
-curl -X POST "http://localhost:8000/marketplace" \
+curl -X POST "${BACKEND_URL:-http://localhost:8000}/marketplace" \
   -H "Content-Type: application/json" \
   -d '{
     "device_id": "DEVICE_ID",
@@ -319,22 +321,22 @@ curl -X POST "http://localhost:8000/marketplace" \
 ### 12. Get Marketplace Listings
 
 ```bash
-curl -X GET "http://localhost:8000/marketplace"
+curl -X GET "${BACKEND_URL:-http://localhost:8000}/marketplace"
 ```
 
 **Filter by resource type**:
 ```bash
-curl -X GET "http://localhost:8000/marketplace?resource_type=storage"
+curl -X GET "${BACKEND_URL:-http://localhost:8000}/marketplace?resource_type=storage"
 ```
 
 **Filter by status**:
 ```bash
-curl -X GET "http://localhost:8000/marketplace?status=available"
+curl -X GET "${BACKEND_URL:-http://localhost:8000}/marketplace?status=available"
 ```
 
 **With pagination**:
 ```bash
-curl -X GET "http://localhost:8000/marketplace?limit=10&offset=0"
+curl -X GET "${BACKEND_URL:-http://localhost:8000}/marketplace?limit=10&offset=0"
 ```
 
 ### 13. Resolve Marketplace Listing
@@ -342,7 +344,7 @@ curl -X GET "http://localhost:8000/marketplace?limit=10&offset=0"
 Replace `LISTING_ID` and `BUYER_DEVICE_ID` with actual UUIDs:
 
 ```bash
-curl -X PUT "http://localhost:8000/marketplace/LISTING_ID/resolve" \
+curl -X PUT "${BACKEND_URL:-http://localhost:8000}/marketplace/LISTING_ID/resolve" \
   -H "Content-Type: application/json" \
   -d '{
     "resolved_with": "BUYER_DEVICE_ID",
@@ -367,7 +369,7 @@ curl -X PUT "http://localhost:8000/marketplace/LISTING_ID/resolve" \
 
 **Device not found**:
 ```bash
-curl -X POST "http://localhost:8000/send-message" \
+curl -X POST "${BACKEND_URL:-http://localhost:8000}/send-message" \
   -H "Content-Type: application/json" \
   -d '{
     "source_id": "invalid-uuid",
@@ -385,7 +387,7 @@ curl -X POST "http://localhost:8000/send-message" \
 
 **Invalid JSON**:
 ```bash
-curl -X POST "http://localhost:8000/register-device" \
+curl -X POST "${BACKEND_URL:-http://localhost:8000}/register-device" \
   -H "Content-Type: application/json" \
   -d '{invalid json}'
 ```
@@ -405,7 +407,7 @@ curl -X POST "http://localhost:8000/register-device" \
 
 ## Using Postman or Insomnia
 
-1. **Import**: Use the base URL `http://localhost:8000`
+1. **Import**: Use the base URL `${BACKEND_URL:-http://localhost:8000}`
 2. **Set header**: `Content-Type: application/json`
 3. **Copy endpoint URLs** from this guide
 4. **Fill in request bodies** with example JSON above
@@ -417,7 +419,7 @@ curl -X POST "http://localhost:8000/register-device" \
 ```bash
 # PowerShell script to send 10 messages
 for ($i = 1; $i -le 10; $i++) {
-    curl.exe -X POST "http://localhost:8000/send-message" `
+    curl.exe -X POST "${BACKEND_URL:-http://localhost:8000}/send-message" `
       -H "Content-Type: application/json" `
       -d @"
 {
@@ -436,7 +438,7 @@ for ($i = 1; $i -le 10; $i++) {
 For interactive testing, use the built-in Swagger UI:
 
 ```
-http://localhost:8000/docs
+${BACKEND_URL:-http://localhost:8000}/docs
 ```
 
 This provides:
@@ -457,7 +459,7 @@ This provides:
 
 **Server not responding?**
 ```bash
-curl http://localhost:8000/health
+curl ${BACKEND_URL:-http://localhost:8000}/health
 ```
 
 **JSON format errors?**
@@ -466,10 +468,10 @@ curl http://localhost:8000/health
 - No trailing commas in JSON
 
 **Invalid device_id?**
-- Get fresh IDs from `/nodes` endpoint
+- Get fresh IDs from `${BACKEND_URL:-http://localhost:8000}/nodes` endpoint
 - UUIDs are case-sensitive
 - Use the exact ID returned by register
 
 ---
 
-For complete API documentation, visit http://localhost:8000/docs or check README.md
+For complete API documentation, visit ${BACKEND_URL:-http://localhost:8000}/docs or check README.md

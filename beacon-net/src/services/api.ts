@@ -1,12 +1,13 @@
 import axios from "axios";
 
-// The API base URL is driven by the Vite environment variable `VITE_API_BASE_URL`.
-// Whenever you change .env values, restart the development server so Vite can
-// pick up the new values (the variables are inlined at build time).
-const baseURL = (import.meta.env.VITE_API_BASE_URL as string) || "http://localhost:8000";
+// API base URL driven by Vite env var `VITE_API_BASE_URL` (inlined at build time).
+// For local development use: http://localhost:8000
+// For Docker Compose use (frontend container -> backend container): http://backend:8000
+// When you change `.env`, restart the Vite dev server so values are picked up.
+const API_BASE_URL = (import.meta.env.VITE_API_BASE_URL as string) || "http://localhost:8000";
 
 export const apiClient = axios.create({
-  baseURL,
+  baseURL: API_BASE_URL,
   timeout: 10000,
   headers: {
     "Content-Type": "application/json",

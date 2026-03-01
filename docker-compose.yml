@@ -12,5 +12,9 @@ services:
     build: ./beacon-net
     ports:
       - "5173:80"
+    environment:
+      # When running via Docker Compose, frontend should call the backend by its
+      # service name `backend` on the compose network.
+      - VITE_API_BASE_URL=http://backend:8000
     depends_on:
       - backend

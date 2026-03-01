@@ -49,27 +49,27 @@ source venv/bin/activate
 uvicorn main:app --reload
 ```
 
-**Server starts at**: http://localhost:8000
+**Server starts at**: the backend base URL (set via `SERVER_HOST`/`SERVER_PORT` or env; default: ${BACKEND_URL:-http://localhost:8000})
 
 ## Accessing the API
 
 ### Interactive API Documentation
-- **Swagger UI**: http://localhost:8000/docs
-- **ReDoc**: http://localhost:8000/redoc
+-- **Swagger UI**: ${BACKEND_URL:-http://localhost:8000}/docs
+-- **ReDoc**: ${BACKEND_URL:-http://localhost:8000}/redoc
 
 ### Test the API
 ```bash
 # Health check
-curl http://localhost:8000/health
+curl ${BACKEND_URL:-http://localhost:8000}/health
 
 # Root endpoint
-curl http://localhost:8000/
+curl ${BACKEND_URL:-http://localhost:8000}/
 ```
 
 ## Example: Register a Device
 
 ```bash
-curl -X POST "http://localhost:8000/register-device" \
+curl -X POST "${BACKEND_URL:-http://localhost:8000}/register-device" \
   -H "Content-Type: application/json" \
   -d '{
     "name": "Emergency Router 1",

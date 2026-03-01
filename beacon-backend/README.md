@@ -4,6 +4,8 @@
 
 A FastAPI-based backend service for peer-to-peer emergency communication, resource sharing, and offline mesh networking.
 
+Note: Examples and quick commands in this README respect the backend base URL. You can set `BACKEND_URL` for shell/examples and `VITE_API_BASE_URL` for the frontend; both default to `http://localhost:8000` for local development.
+
 ## Features
 
 - **Device Registration**: Register devices/nodes in the emergency communication network
@@ -85,7 +87,7 @@ Start the development server with hot-reload:
 uvicorn main:app --reload
 ```
 
-The server will be available at: **http://localhost:8000**
+The server will be available at the backend base URL (set via `SERVER_HOST`/`SERVER_PORT` or an environment variable; default: **http://localhost:8000**)
 
 ### Production Deployment
 
@@ -99,8 +101,8 @@ uvicorn main:app --host 0.0.0.0 --port 8000
 
 Once running, access interactive API documentation at:
 
-- **Swagger UI**: http://localhost:8000/docs
-- **ReDoc**: http://localhost:8000/redoc
+-- **Swagger UI**: ${BACKEND_URL:-http://localhost:8000}/docs
+-- **ReDoc**: ${BACKEND_URL:-http://localhost:8000}/redoc
 
 ### Core Endpoints
 

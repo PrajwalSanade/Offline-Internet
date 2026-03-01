@@ -2,6 +2,8 @@
 
 ## ✅ Project Created Successfully!
 
+Note: Examples and quick commands in this summary respect the backend base URL. You can set `BACKEND_URL` for shell examples and `VITE_API_BASE_URL` for the frontend; both default to `http://localhost:8000` for local development.
+
 A production-ready FastAPI backend for the **Offline Internet Emergency Communication System** has been created at:
 
 ```
@@ -32,13 +34,13 @@ beacon-backend/
 
 ## 🚀 Server Status
 
-**✓ Server is currently RUNNING** at `http://localhost:8000`
+**✓ Server is currently RUNNING** at the backend base URL (default: `${BACKEND_URL:-http://localhost:8000}`)
 
 ### Access Points:
-- **API Root**: http://localhost:8000/
-- **Health Check**: http://localhost:8000/health
-- **Swagger UI Docs**: http://localhost:8000/docs
-- **ReDoc Documentation**: http://localhost:8000/redoc
+- **API Root**: `${BACKEND_URL:-http://localhost:8000}/`
+- **Health Check**: `${BACKEND_URL:-http://localhost:8000}/health`
+- **Swagger UI Docs**: `${BACKEND_URL:-http://localhost:8000}/docs`
+- **ReDoc Documentation**: `${BACKEND_URL:-http://localhost:8000}/redoc`
 
 ## 📦 Installed Dependencies
 
@@ -210,7 +212,7 @@ c:\Users\prajw\Downloads\Mesh\beacon-net\
 
 Frontend can make requests to:
 ```
-http://localhost:8000/api-endpoints
+${BACKEND_URL:-http://localhost:8000}/api-endpoints
 ```
 
 CORS is enabled for seamless frontend communication.
@@ -236,7 +238,7 @@ For production, update:
 1. ✅ Backend is running and ready
 2. 📚 Review `/beacon-backend/README.md` for full API documentation
 3. 🧪 Run tests: `pytest test_main.py -v`
-4. 🔌 Connect frontend to `http://localhost:8000`
+4. 🔌 Connect frontend to the backend base URL (use `VITE_API_BASE_URL` or `BACKEND_URL`; default: http://localhost:8000)
 5. 🚀 Deploy to production when ready
 
 ## 📞 Quick Reference
@@ -247,7 +249,7 @@ For production, update:
 | Install deps | `pip install -r requirements.txt` |
 | Run server | `uvicorn main:app --reload` |
 | Run tests | `pytest test_main.py -v` |
-| View API docs | Open http://localhost:8000/docs |
+| View API docs | Open `${BACKEND_URL:-http://localhost:8000}/docs` |
 | Stop server | `Ctrl+C` |
 
 ## ✨ Highlights

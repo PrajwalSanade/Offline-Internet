@@ -34,7 +34,7 @@ echo.
 echo  venv\Scripts\activate
 echo  uvicorn main:app --reload
 echo.
-echo The API will be available at: http://localhost:8000
-echo Interactive docs at: http://localhost:8000/docs
+echo The API will be available at the backend base URL (default: http://localhost:8000)
+echo Interactive docs at: ${BACKEND_URL:-http://localhost:8000}/docs
 echo.
 pause

@@ -89,10 +89,10 @@ Host: 0.0.0.0
 
 | URL | Purpose |
 |-----|---------|
-| http://localhost:8000/ | API root info |
-| http://localhost:8000/docs | **Interactive Swagger UI** ⭐ |
-| http://localhost:8000/redoc | Alternative API docs |
-| http://localhost:8000/health | Health check (200 OK ✓) |
+| Backend base URL (set via env; default: http://localhost:8000) | API root info |
+| Backend docs at `${BACKEND_URL:-http://localhost:8000}/docs` | **Interactive Swagger UI** ⭐ |
+| Backend docs at `${BACKEND_URL:-http://localhost:8000}/redoc` | Alternative API docs |
+| `${BACKEND_URL:-http://localhost:8000}/health` | Health check (200 OK ✓) |
 
 ---
 
@@ -130,9 +130,8 @@ GET    /messages/{device_id}         Get device messages
 
 ### Marketplace (3)
 ```
-POST   /marketplace                  Create listing
+Server is already running! Access at the backend base URL (default: **${BACKEND_URL:-http://localhost:8000}**). Replace example URLs below with your environment's base URL when running in another environment.
 GET    /marketplace                  List items
-PUT    /marketplace/{id}/resolve     Mark as sold
 ```
 
 ### Utility (2)
@@ -142,7 +141,7 @@ GET    /                             API information
 ```
 
 ---
-
+  curl -X POST "${BACKEND_URL:-http://localhost:8000}/register-device" \
 ## 💾 DATABASE SCHEMA
 
 ### Table: devices
@@ -150,7 +149,7 @@ GET    /                             API information
 device_id (UUID, PK)    location
 name                    device_type
 status                  last_seen
-is_active               created_at
+  curl -X POST "${BACKEND_URL:-http://localhost:8000}/send-message" \
 ```
 
 ### Table: messages
@@ -158,7 +157,7 @@ is_active               created_at
 message_id (UUID, PK)   content
 source_id               is_encrypted
 destination_id          timestamp
-hop_count               max_hops
+  curl -X POST "${BACKEND_URL:-http://localhost:8000}/marketplace" \
 is_broadcast            message_hash (UNIQUE)
 delivered               created_at
 ```
@@ -168,7 +167,7 @@ delivered               created_at
 listing_id (UUID, PK)   quantity
 device_id               unit
 title                   available
-description             price_credits
+ | ${BACKEND_URL:-http://localhost:8000}
 resource_type           status
 resolved_with           expires_at
 created_at              updated_at
@@ -279,7 +278,7 @@ chmod +x setup.sh
 ```
 
 ### Current Status
-Server is already running! Access at: **http://localhost:8000**
+Server is already running! Access at the backend base URL (default: **${BACKEND_URL:-http://localhost:8000}**). Replace example URLs below with your environment's base URL when running in another environment.
 
 ---
 
@@ -287,21 +286,21 @@ Server is already running! Access at: **http://localhost:8000**
 
 ### Register Device
 ```bash
-curl -X POST "http://localhost:8000/register-device" \
+curl -X POST "${BACKEND_URL:-http://localhost:8000}/register-device" \
   -H "Content-Type: application/json" \
   -d '{"name":"Router 1","location":"Building A","device_type":"router"}'
 ```
 
 ### Send Message
 ```bash
-curl -X POST "http://localhost:8000/send-message" \
+curl -X POST "${BACKEND_URL:-http://localhost:8000}/send-message" \
   -H "Content-Type: application/json" \
   -d '{"source_id":"ID1","destination_id":"ID2","content":"Hello","is_encrypted":false}'
 ```
 
 ### Create Marketplace Listing
 ```bash
-curl -X POST "http://localhost:8000/marketplace" \
+curl -X POST "${BACKEND_URL:-http://localhost:8000}/marketplace" \
   -H "Content-Type: application/json" \
   -d '{"device_id":"ID1","title":"Storage","resource_type":"storage","quantity":100,"unit":"GB","price_credits":50}'
 ```
@@ -320,7 +319,7 @@ c:\Users\prajw\Downloads\Mesh\beacon-net\
 
 Frontend can make requests to:
 ```
-http://localhost:8000
+${BACKEND_URL:-http://localhost:8000}
 ```
 
 CORS is enabled for seamless communication.
