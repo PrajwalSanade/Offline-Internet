@@ -24,7 +24,9 @@ export default function NetworkMap() {
     api.getNodes().then(setNodes);
   }, []);
 
-  const positioned = getNodePositions(nodes);
+  // only include nodes explicitly marked active
+  const activeNodes = nodes.filter(n => n.isActive === true);
+  const positioned = getNodePositions(activeNodes);
 
   const simulateHop = useCallback((index: number) => {
     setAnimatingPath(index);
@@ -35,7 +37,7 @@ export default function NetworkMap() {
     <div className="md:pl-16 space-y-4">
       <div className="flex items-center justify-between">
         <h2 className="text-lg font-bold">Network Topology</h2>
-        <span className="text-xs font-mono text-muted-foreground">{nodes.length} nodes discovered</span>
+        <span className="text-xs font-mono text-muted-foreground">{activeNodes.length} nodes discovered</span>
       </div>
 
       <div className="rounded-xl border border-border bg-card p-4 overflow-hidden">

@@ -4,6 +4,8 @@ export interface Device {
   distance?: string;
   signalStrength?: number;
   lastSeen?: string;
+  isActive?: boolean;
+  status?: string;
 }
 
 export interface Message {

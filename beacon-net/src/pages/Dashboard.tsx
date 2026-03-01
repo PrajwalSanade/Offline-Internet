@@ -25,6 +25,9 @@ export default function Dashboard() {
     api.getNodes().then(setNodes);
   }, []);
 
+  // derive active nodes (use strict boolean check)
+  const activeNodes = nodes.filter(n => n.isActive === true);
+
   return (
     <div className="md:pl-16">
       <motion.div variants={container} initial="hidden" animate="show" className="space-y-5">
@@ -36,7 +39,7 @@ export default function Dashboard() {
           </div>
           <div className="flex items-center gap-2 rounded-lg bg-secondary px-3 py-2">
             <Radio className="h-4 w-4 text-primary" />
-            <span className="text-xs font-mono">{nodes.length} Nodes Nearby</span>
+            <span className="text-xs font-mono">{activeNodes.length} Nodes Nearby</span>
           </div>
         </motion.div>
 
@@ -63,7 +66,7 @@ export default function Dashboard() {
           <ActionCard
             icon={MessageSquare}
             title="Messages"
-            subtitle={`${nodes.length} devices reachable`}
+            subtitle={`${activeNodes.length} devices reachable`}
             onClick={() => navigate("/messaging")}
           />
           <ActionCard
@@ -84,7 +87,7 @@ export default function Dashboard() {
         <motion.div variants={item}>
           <h3 className="mb-3 text-sm font-semibold text-muted-foreground uppercase tracking-wider">Nearby Nodes</h3>
           <div className="space-y-2">
-            {nodes.map((node, i) => (
+            {activeNodes.map((node, i) => (
               <motion.div
                 key={node.id}
                 initial={{ opacity: 0, x: -10 }}

@@ -25,6 +25,10 @@ export async function getNodes(): Promise<Device[]> {
     distance: d.distance || "",
     signalStrength: d.signal_strength || d.signalStrength || 0,
     lastSeen: d.last_seen ? new Date(d.last_seen).toISOString() : undefined,
+    // prefer explicit boolean check for active flag
+    isActive: d.is_active === true,
+    // normalize status to lowercase string to avoid strict case comparisons
+    status: d.status !== undefined && d.status !== null ? String(d.status).toLowerCase() : undefined,
   }));
 }
 

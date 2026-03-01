@@ -12,9 +12,14 @@ services:
     build: ./beacon-net
     ports:
       - "5173:80"
-    environment:
-      # When running via Docker Compose, frontend should call the backend by its
-      # service name `backend` on the compose network.
-      - VITE_API_BASE_URL=http://backend:8000
+    # environment variables defined here only affect the container/process,
+    # they do *not* change the value baked into the static bundle at build
+    # time.  The frontend uses VITE_API_BASE_URL from the build environment
+    # (from `.env` or build args) so the browser can resolve it.  In production
+    # the package is built with localhost so requests originate from the host.
+    # You can safely remove or override this if you rebuild with a different
+    # value.
+    # environment:
+    #   - VITE_API_BASE_URL=http://localhost:8000
     depends_on:
       - backend
